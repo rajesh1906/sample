@@ -1,9 +1,7 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,9 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Rajesh Kumar on 23-09-2017.
@@ -111,13 +106,13 @@ public class Crawler extends AppCompatActivity implements View.OnClickListener {
         int viewId = v.getId();
         switch (viewId) {
             case R.id.start:
-                String webUrl = "http://m4ufree.com/";
+                String webUrl = "http://123freemovies.net/genres/action.html";
                 if (TextUtils.isEmpty(webUrl)) {
                     Toast.makeText(getApplicationContext(), "Please input web Url",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     crawlingRunning = true;
-                    crawler.startCrawlerTask("http://m4ufree.com/", true);
+                    crawler.startCrawlerTask("http://123freemovies.net/genres/action.html", true);
                     startButton.setEnabled(false);
                     crawlingInfo.setVisibility(View.VISIBLE);
                     // Send delayed message to handler for stopping crawling

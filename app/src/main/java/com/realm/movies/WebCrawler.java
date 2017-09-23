@@ -1,10 +1,11 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 /**
  * Created by Rajesh Kumar on 23-09-2017.
  */
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -16,7 +17,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -116,9 +121,11 @@ public class WebCrawler {
         public void run() {
             String pageContent = retreiveHtmlContent(mUrl);
 
+
+
             if (!TextUtils.isEmpty(pageContent.toString())) {
                 insertIntoCrawlerDB(mUrl, pageContent);
-                Log.e("page content is ","<><>"+pageContent);
+//                Log.e("page content is ","<><>"+getHtmlCode(mUrl));
                 synchronized (lock) {
                     crawledURL.add(mUrl);
                 }
@@ -143,7 +150,7 @@ public class WebCrawler {
                 }
 
                 Elements media = doc.select("[src]");
-                Elements imports = doc.select("link[href]");
+                Elements title = doc.getElementsByTag("[title]");
 
 //                print("\nMedia: (%d)", media.size());
                 for (Element src : media) {
@@ -159,9 +166,9 @@ public class WebCrawler {
                 }
 
                // print("\nImports: (%d)", imports.size());
-                for (Element link : imports) {
+                for (Element link : title) {
 //                    print(" * %s <%s> (%s)", link.tagName(),link.attr("abs:href"), link.attr("rel"));
-//                    Log.e("imports is ","<><>"+link.attr("abs:href"));
+                    Log.e("imports is ","<><>"+link.attr("abs:title"));
 
                 }
 
@@ -176,6 +183,30 @@ public class WebCrawler {
             // start more crawling tasks if queue is not empty
             mHandler.sendEmptyMessage(0);
 
+        }
+
+
+        private String getHtmlCode(String url){
+            String html = "";
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet(url);
+                HttpResponse response = client.execute(request);
+
+
+                InputStream in = response.getEntity().getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                StringBuilder str = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    str.append(line);
+                }
+                in.close();
+                html = str.toString();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return html;
         }
 
         private String retreiveHtmlContent(String Url) {

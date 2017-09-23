@@ -1,4 +1,4 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 import android.lib.recaptcha.ReCaptcha;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

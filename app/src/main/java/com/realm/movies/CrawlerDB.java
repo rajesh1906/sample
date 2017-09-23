@@ -1,4 +1,4 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

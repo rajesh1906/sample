@@ -1,8 +1,6 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Created by Rajesh Kumar on 18-09-2017.

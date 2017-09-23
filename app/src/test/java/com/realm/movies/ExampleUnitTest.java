@@ -1,4 +1,4 @@
-package com.realm.snakegame;
+package com.realm.movies;
 
 import org.junit.Test;
 
